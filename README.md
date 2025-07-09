@@ -1,4 +1,10 @@
 # 🧠 Smart Lead Intake System
+![n8n](https://img.shields.io/badge/n8n-Automation-orange)
+![Google Sheets](https://img.shields.io/badge/Google%20Sheets-Connected-brightgreen)
+![Airtable](https://img.shields.io/badge/Airtable-CRM-blue)
+![HubSpot](https://img.shields.io/badge/HubSpot-Synced-blueviolet)
+![Slack](https://img.shields.io/badge/Slack-Notifications-yellow)
+![Gmail](https://img.shields.io/badge/Gmail-Auto_Responder-red)
 
 A fully automated, real-world-ready **lead intake pipeline** powered by **Google Forms**, **Google Sheets**, **n8n**, **Airtable**, **HubSpot**, **Slack**, and **Gmail**.
 
@@ -91,19 +97,19 @@ All timestamps are:
 - Initially stored in Google Sheet as **Excel serial numbers**
 - Converted to:
   - ISO UTC format for HubSpot & Airtable
-  - Formatted readable time (`Asia/Kuala_Lumpur`) for Slack
+  - Formatted readable time (`Asia/Singapore`) for Slack
 
 ✅ This solves major timezone mismatch issues.
 
 ---
 
-## 📥 Setup Instructions (Optional)
+## 📥 Setup Instructions
 *Coming soon as a separate repo or Notion guide — let me know if you want this public.*
 
 ---
 
 ## 🎬 Upwork Demo Video
-**Link/Embed** (optional placeholder):
+**Link/Embed**:
 `[Coming soon: walk-through video of live workflow]`
 
 ---
@@ -114,4 +120,4 @@ MIT — for portfolio/demo purposes. Commercial use requires adaptation.
 ---
 
 ## 💡 Author
-Ashraf Abd Elhalim — [Upwork Profile](#) | [GitHub](#)
+Ashraf Abd Elhalim — [Upwork Profile](https://www.upwork.com/freelancers/~011734116f96dfc1c7?mp_source=share) | [GitHub](https://github.com/shooshka133)

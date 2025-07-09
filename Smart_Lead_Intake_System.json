@@ -1,0 +1,1064 @@
+{
+  "name": "Smart Lead Intake System",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1ZkD-HYrNj94gT_LaYQbQF82A8OTfusgeWrFB-fB_lHg",
+          "mode": "list",
+          "cachedResultName": "FormTest800 (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZkD-HYrNj94gT_LaYQbQF82A8OTfusgeWrFB-fB_lHg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 76161762,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZkD-HYrNj94gT_LaYQbQF82A8OTfusgeWrFB-fB_lHg/edit#gid=76161762"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -580,
+        -40
+      ],
+      "id": "484fff42-b830-4d3e-886b-843e5be3769c",
+      "name": "Google Sheets Trigger",
+      "notesInFlow": false,
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "UiG4th0lTY11FBAG",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ev9LB_TyBZfUTq0gov6Faap7c81u5kMJQtcN-x-1wn0",
+          "mode": "list",
+          "cachedResultName": "newLeadForLife",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ev9LB_TyBZfUTq0gov6Faap7c81u5kMJQtcN-x-1wn0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ev9LB_TyBZfUTq0gov6Faap7c81u5kMJQtcN-x-1wn0/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -380,
+        60
+      ],
+      "id": "1adc3459-8e25-4da8-94aa-3c1c5932de4d",
+      "name": "Get Valid Leads",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BtjViY2lEYCoWwdk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...items[items.length - 1].json,\n    source: \"Google Form\"  // 👈 assign only once here\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -380,
+        -80
+      ],
+      "id": "a68b0b3d-72c5-420a-92f5-f8fe4247bcf1",
+      "name": "Extract New Row"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9c663d01-cb9e-426c-ab7c-0d130b5c0c16",
+              "leftValue": "={{ $json.exists }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        -40
+      ],
+      "id": "e5a5cf97-4ec0-4761-b119-5fc330807899",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1ZkD-HYrNj94gT_LaYQbQF82A8OTfusgeWrFB-fB_lHg",
+          "mode": "list",
+          "cachedResultName": "FormTest800 (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZkD-HYrNj94gT_LaYQbQF82A8OTfusgeWrFB-fB_lHg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1824935087,
+          "mode": "list",
+          "cachedResultName": "Duplicate Lead",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZkD-HYrNj94gT_LaYQbQF82A8OTfusgeWrFB-fB_lHg/edit#gid=1824935087"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $json.Timestamp }}",
+            "First Name": "={{ $json['First Name'] }}",
+            "Last Name": "={{ $json['Last Name'] }}",
+            "Email": "={{ $json['Email '] }}",
+            "Budget": "={{ $json.Budget }}",
+            "Company Name": "={{ $json['Company Name'] }}",
+            "Project Type": "={{ $json['Project Type  '] }}",
+            "Urgency": "={{ $json.Urgency }}",
+            "Project Description": "={{ $json['Project Description  '] }}",
+            "Referral": "={{ $json.Referral }}",
+            "Source": "={{ $json.source }}",
+            "Status": "={{ $json.status }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last Name",
+              "displayName": "Last Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Referral",
+              "displayName": "Referral",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Project Type",
+              "displayName": "Project Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Urgency",
+              "displayName": "Urgency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Project Description",
+              "displayName": "Project Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        280,
+        -180
+      ],
+      "id": "01da7ec5-167e-49d9-a214-672b26715ba2",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BtjViY2lEYCoWwdk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ev9LB_TyBZfUTq0gov6Faap7c81u5kMJQtcN-x-1wn0",
+          "mode": "list",
+          "cachedResultName": "newLeadForLife",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ev9LB_TyBZfUTq0gov6Faap7c81u5kMJQtcN-x-1wn0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ev9LB_TyBZfUTq0gov6Faap7c81u5kMJQtcN-x-1wn0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "First Name": "={{ $json['First Name'] }}",
+            "Last Name": "={{ $json['Last Name'] }}",
+            "Budget": "={{ $json.Budget }}",
+            "Email": "={{ $json['Email '] }}",
+            "Timestamp": "={{ $json.Timestamp }}",
+            "Project Description": "={{ $json['Project Description  '] }}",
+            "Urgency": "={{ $json.Urgency }}",
+            "Project Type": "={{ $json['Project Type  '] }}",
+            "Company Name": "={{ $json['Company Name'] }}",
+            "Referral": "={{ $json.Referral }}",
+            "Source": "={{ $json.source }}",
+            "Status": "={{ $json.status }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Last Name",
+              "displayName": "Last Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Referral",
+              "displayName": "Referral",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Project Type",
+              "displayName": "Project Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Urgency",
+              "displayName": "Urgency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Project Description",
+              "displayName": "Project Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        280,
+        -20
+      ],
+      "id": "92adc5fd-28b0-4a39-a61e-e3cb27b419cb",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "BtjViY2lEYCoWwdk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// First item is the new row\nconst newRow = items[0].json;\n\n// Remaining items are the saved rows\nconst savedRows = items.slice(1).map(item => item.json);\n\n// Normalize keys\nconst normalizeKeys = (obj) => {\n  const normalized = {};\n  for (const key in obj) {\n    normalized[key.trim()] = obj[key];\n  }\n  return normalized;\n};\n\nconst newRowClean = normalizeKeys(newRow);\nconst savedRowsClean = savedRows.map(row => normalizeKeys(row));\n\n// Fields to check\nconst fieldsToCheck = ['Email', 'First Name', 'Last Name'];\n\n// Check for a match\nconst matchFound = savedRowsClean.some(row => \n  fieldsToCheck.every(field => \n    row[field] && newRowClean[field] &&\n    row[field].toString().toLowerCase() === newRowClean[field].toString().toLowerCase()\n  )\n);\n\n// Build output\nconst output = {\n  ...newRow,\n  source: newRow.source || 'Google Form', // Ensure source is preserved\n  exists: matchFound,\n  status: matchFound ? 'duplicate' : 'New'\n};\n\n// ✅ Set initial Status only for new records\nif (!matchFound) {\n  output.Status = 'New';\n}\n\nreturn [{ json: output }];\n\n\n\n\n\n// // First item is the new row\n// const newRow = items[0].json;\n\n// // Remaining items are the saved rows\n// const savedRows = items.slice(1).map(item => item.json);\n\n// // Normalize keys: strip whitespace from keys\n// const normalizeKeys = (obj) => {\n//   const normalized = {};\n//   for (const key in obj) {\n//     normalized[key.trim()] = obj[key];\n//   }\n//   return normalized;\n// };\n\n// const newRowClean = normalizeKeys(newRow);\n// const savedRowsClean = savedRows.map(row => normalizeKeys(row));\n\n// // Fields to compare\n// const fieldsToCheck = ['Email', 'First Name', 'Last Name'];\n\n// // Check for a match\n// const matchFound = savedRowsClean.some(row => \n//   fieldsToCheck.every(field => \n//     row[field] && newRowClean[field] &&\n//     row[field].toString().toLowerCase() === newRowClean[field].toString().toLowerCase()\n//   )\n// );\n\n// // Build output with source passed through\n// const output = {\n//   ...newRow,\n//   exists: matchFound,\n//   status: matchFound ? 'duplicate' : 'new'\n// };\n\n// return [{ json: output }];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -60,
+        -40
+      ],
+      "id": "7567f5eb-f377-4135-b2dc-a8319f01bf93",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -200,
+        -40
+      ],
+      "id": "259eb0fe-9392-47e4-a3a2-0adff7c716d6",
+      "name": "Merge",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "authentication": "appToken",
+        "email": "={{ $json.Email }}",
+        "additionalFields": {
+          "customPropertiesUi": {
+            "customPropertiesValues": [
+              {
+                "property": "budget",
+                "value": "={{ $json.Budget }}"
+              },
+              {
+                "property": "timestamps",
+                "value": "={{ $json.timestampMillis }}"
+              },
+              {
+                "property": "source",
+                "value": "={{ $json.Referral }}"
+              },
+              {
+                "property": "urgency",
+                "value": "={{ $json.Urgency }}"
+              },
+              {
+                "property": "comp_name",
+                "value": "={{ $json['Company Name'] }}"
+              },
+              {
+                "property": "project_description",
+                "value": "={{ $json['Project Description'] }}"
+              },
+              {
+                "property": "project_type",
+                "value": "={{ $json['Project Type'] }}"
+              },
+              {
+                "property": "source_lead",
+                "value": "={{ $json.Source }}"
+              }
+            ]
+          },
+          "firstName": "={{ $json['First Name'] }}",
+          "lastName": "={{ $json['Last Name'] }}",
+          "message": ""
+        },
+        "options": {
+          "resolveData": false
+        }
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        -160
+      ],
+      "id": "34cf3a1c-1092-4255-b4f4-0db42f5f7cf2",
+      "name": "Create or update a contact",
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "vJ0BtKC5ePkVhptq",
+          "name": "HubSpot App Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "upsert",
+        "base": {
+          "__rl": true,
+          "value": "app7404jLw59tXgq1",
+          "mode": "list",
+          "cachedResultName": "Lead CRM Sync",
+          "cachedResultUrl": "https://airtable.com/app7404jLw59tXgq1"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl6y33tDSdQHNAz1",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/app7404jLw59tXgq1/tbl6y33tDSdQHNAz1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "First Name": "={{ $json['First Name'] }}",
+            "Last Name": "={{ $json['Last Name'] }}",
+            "Budget": "={{ $json.Budget }}",
+            "Email": "={{ $json.Email }}",
+            "Project Type": "={{ $json['Project Type'] }}",
+            "Urgency": "={{ $json.Urgency }}",
+            "Company Name": "={{ $json['Company Name'] }}",
+            "Project Description": "={{ $json['Project Description'] }}",
+            "Timestamp": "={{ $json.formattedDate }}",
+            "Referral": "={{ $json.Referral }}",
+            "Source": "={{ $json.Source }}",
+            "Status": "={{ $json.Status }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Name",
+              "displayName": "Last Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Referral",
+              "displayName": "Referral",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Google",
+                  "value": "Google"
+                },
+                {
+                  "name": "Social Media",
+                  "value": "Social Media"
+                },
+                {
+                  "name": "Word of Mouth",
+                  "value": "Word of Mouth"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Project Type",
+              "displayName": "Project Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Website",
+                  "value": "Website"
+                },
+                {
+                  "name": "Mobile App",
+                  "value": "Mobile App"
+                },
+                {
+                  "name": "Branding",
+                  "value": "Branding"
+                },
+                {
+                  "name": "Consultation",
+                  "value": "Consultation"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Urgency",
+              "displayName": "Urgency",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Immediate",
+                  "value": "Immediate"
+                },
+                {
+                  "name": "This Month",
+                  "value": "This Month"
+                },
+                {
+                  "name": "Next 3 Months",
+                  "value": "Next 3 Months"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Project Description",
+              "displayName": "Project Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Google Form",
+                  "value": "Google Form"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "New",
+                  "value": "New"
+                },
+                {
+                  "name": "Contacted",
+                  "value": "Contacted"
+                },
+                {
+                  "name": "Qualified",
+                  "value": "Qualified"
+                },
+                {
+                  "name": "Converted",
+                  "value": "Converted"
+                },
+                {
+                  "name": "Not Interested",
+                  "value": "Not Interested"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Last Updated",
+              "displayName": "Last Updated",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": false
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        120
+      ],
+      "id": "1e25d4b1-5e34-4d1a-89d1-364b4bb39ebf",
+      "name": "Create or update a record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "JfHlhFdrvVRBkT7h",
+          "name": "Airtable Personal Access Token account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C095C6EHN7J",
+          "mode": "list",
+          "cachedResultName": "new-leads"
+        },
+        "text": "=🚀 *New Lead Received!*\n\n👤 *Name:* {{ $json['First Name'] }} {{ $json['Last Name'] }}\n📧 *Email:* {{ $json.Email }}\n🏢 *Company:* {{ $json['Company Name'] }}\n📁 *Project Type:* {{ $json['Project Type'] }}\n⏱️ *Urgency:* {{ $json.Urgency }}\n💰 *Budget:* {{ $json.Budget }}\n📝 *Project Description:* {{ $json['Project Description'] }}\n📢 *Referral Source:* {{ $json.Referral }}\n🕒 *Submitted At:* {{ $json.slackTimeFormatted }}\n\n🔗 *Source:* {{ $json.Source || $json.source }}\n📌 Status: {{ $json.Status }}\n\n",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        680,
+        -20
+      ],
+      "id": "454ec372-6978-4420-9354-e9e7fcbb4798",
+      "name": "Send a message",
+      "webhookId": "0b990dfd-7d84-4bb1-a06b-b6a7baa9565e",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "F7T1ISX5qxdmpF4C",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst rawRow = items[0].json;\nconst serial = parseFloat(rawRow['Timestamp']);\n\nif (isNaN(serial) || serial < 30000) {\n  return [{\n    json: {\n      ...rawRow,\n      error: 'Invalid or missing timestamp',\n      slackTimeFormatted: 'Invalid Date',\n      formattedDate: null\n    }\n  }];\n}\n\n// Convert Excel serial to local MYT time\nconst localDate = new Date((serial - 25569) * 86400 * 1000);\n\n// ✅ Convert to true UTC for Airtable/HubSpot\nconst utcDate = new Date(localDate.getTime() - (8 * 60 * 60 * 1000));\n\n// Format for Slack in local time\nconst slackDisplay = localDate.toLocaleString('en-GB', {\n  day: 'numeric',\n  month: 'short',\n  year: 'numeric',\n  hour: '2-digit',\n  minute: '2-digit',\n  hour12: true,\n});\n\nreturn [{\n  json: {\n    ...rawRow,\n    formattedDate: utcDate.toISOString(),         // ✅ UTC for Airtable\n    timestampMillis: utcDate.getTime(),           // ✅ Numeric for HubSpot\n    slackTimeFormatted: slackDisplay,             // ✅ Local time for Slack\n    timezone: 'Asia/Kuala_Lumpur'\n  }\n}];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        -20
+      ],
+      "id": "ac4c5e2f-cd76-45fa-a990-fb59c76823ea",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "sendTo": "ashooshka@gmail.com",
+        "subject": "=New Lead from {{ $json.fields['First Name'] }} {{ $json.fields['Last Name'] }}",
+        "message": "=<h2>🚀 New Lead Received!</h2>\n\n<p><strong>👤 Name:</strong> {{ $json.fields['First Name'] }} <{{ $json.fields['Last Name'] }}/p>\n<p><strong>📧 Email:</strong> {{ $json.fields.Email }}</p>\n<p><strong>🏢 Company:</strong> {{ $json.fields['Company Name'] }}</p>\n<p><strong>📁 Project Type:</strong> {{ $json.fields['Project Type'] }}</p>\n<p><strong>⏱️ Urgency:</strong> {{ $json.fields.Urgency }}</p>\n<p><strong>💰 Budget:</strong> {{ $json.fields.Budget }}</p>\n<p><strong>📝Project Description:</strong> {{ $json.fields['Project Description'] }}</p>\n<p><strong>📢 Referral Source:</strong> {{ $json.fields.Referral }}</p>\n<p><strong>🕒 Submitted At:</strong> {{ $json.fields.Timestamp }}</p>\n\n<p><strong>🔗 Source:</strong> {{ $json.fields.Source }}</p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        880,
+        120
+      ],
+      "id": "f16073ff-a4ce-41bc-a14a-db29b95667be",
+      "name": "Send a message1",
+      "webhookId": "131f2ff7-50d1-4281-beaf-baa2b994c4db",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Kkjt4LGCZ2mDRNFy",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Valid Leads",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extract New Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract New Row": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Valid Leads": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create or update a record": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Create or update a contact",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create or update a record",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "de507487-a4d4-4778-90ec-be21e2ac00d4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7ff8cd75b8ea4538c4979fd9c77b637a72b55e066d92e04d15d75b5cc0988a31"
+  },
+  "id": "WN0nNjrAgHlSSYS2",
+  "tags": []
+}

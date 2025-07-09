@@ -57,18 +57,18 @@ It’s a **real-world lead capture system**, built to demonstrate automation, co
 
 ## 🧪 Sample Data Flow
 
-![Workflow](workflow_n8n.png)
+![Workflow](screenshots/workflow_n8n.png)
 
 | Step | Screenshot |
 |------|------------|
-| Google Form | ![Form](Form.png) |
-| Responses | ![Responses](Responses_1.png) |
-| Valid Leads Sheet | ![Valid](Valid_lead.png) |
-| Duplicate Leads Sheet | ![Duplicate](Duplicate_lead.png) |
-| Airtable View | ![Airtable](Airtable_1.png) ![Airtable2](Airtable_2.png) |
-| HubSpot Contact | ![HubSpot1](Hubspot_1.png) ![Hubspot2](Hubspot_2.png) |
-| Slack Notification | ![Slack](Slack.png) |
-| Gmail Confirmation | ![Gmail](Gmail.png) |
+| Google Form | ![Form](screenshots/Form.png) |
+| Responses | ![Responses](screenshots/Responses_1.png) |
+| Valid Leads Sheet | ![Valid](screenshots/Valid_lead.png) |
+| Duplicate Leads Sheet | ![Duplicate](screenshots/Duplicate_lead.png) |
+| Airtable View | ![Airtable](screenshots/Airtable_1.png) ![Airtable2](screenshots/Airtable_2.png) |
+| HubSpot Contact | ![HubSpot1](screenshots/Hubspot_1.png) ![Hubspot2](screenshots/Hubspot_2.png) |
+| Slack Notification | ![Slack](screenshots/Slack.png) |
+| Gmail Confirmation | ![Gmail](screenshots/Gmail.png) |
 
 ---
 
